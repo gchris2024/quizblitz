@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>QuizBlitz</h1>
+    <h1>Quiz Blitz</h1>
   </div>
 </template>
 
