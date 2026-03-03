@@ -23,6 +23,10 @@
         </button>
       </div>
     </div>
+
+    <div class="question-counter">
+      Question {{ currentIndex + 1 }} of {{ totalQuestions }}
+    </div>
   </div>
 </template>
 
@@ -33,6 +37,14 @@ export default {
   props: {
     question: {
       type: Object,
+      required: true,
+    },
+    currentIndex: {
+      type: Number,
+      required: true,
+    },
+    totalQuestions: {
+      type: Number,
       required: true,
     },
   },
@@ -279,5 +291,14 @@ export default {
   80% {
     transform: translateX(4px);
   }
+}
+
+.question-counter {
+  position: absolute;
+  bottom: 2rem;
+  font-size: 0.95rem;
+  color: rgba(255, 220, 50, 0.7);
+  font-family: "DM Sans", sans-serif;
+  letter-spacing: 0.5px;
 }
 </style>

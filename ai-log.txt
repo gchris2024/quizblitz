@@ -16,3 +16,13 @@ PROMPT: I'm building a Vue 3 quiz game using Vite and the Options API. Write a s
 RESPONSE: `src/components/QuestionCard.vue`
 
 WHAT I USED: The entire file.
+
+PROMPT: Replace these generic questions with 10 simple web application questions
+RESPONSE: Questions in `App.vue`
+
+WHAT I USED: All of the questions.
+
+PROMPT: Add a question counter below the QuestionCard that shows "Question 3 of 10". This should be a computed property or a simple expression in the template. Commit it as Add question counter.
+RESPONSE: Changes in `App.vue` DOM and CSS styling
+
+WHAT I USED: All of the changes.
