@@ -1,14 +1,6 @@
 <template>
   <div id="app">
-    <StartScreen v-if="gameState === 'start'" @start="startGame" />
-    <QuestionCard
-      v-else-if="gameState === 'playing'"
-      :question="questions[currentIndex]"
-      :currentIndex="currentIndex"
-      :totalQuestions="questions.length"
-      @answer="handleAnswer"
-    />
-    <ScoreBoard v-else :score="score" @restart="resetGame" />
+    <RouterView />
   </div>
 </template>
 
