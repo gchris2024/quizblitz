@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../components/HomeView.vue";
+import HomeView from "../views/HomeView.vue";
 import PlayView from "../views/PlayView.vue";
 import LeaderboardView from "../views/LeaderboardView.vue";
 

@@ -7,7 +7,7 @@
         <div class="logo-underline"></div>
       </div>
       <p class="tagline">Lightning-fast trivia. <em>Think fast or lose.</em></p>
-      <button class="play-btn" @click="$emit('start')">
+      <button class="play-btn" @click="playGame">
         <span class="btn-text">Play</span>
         <span class="btn-flash">▶</span>
       </button>
@@ -18,7 +18,11 @@
 <script>
 export default {
   name: "StartScreen",
-  emits: ["start"],
+  methods: {
+    playGame() {
+      this.$router.push({ name: "play" });
+    },
+  },
 };
 </script>
 
