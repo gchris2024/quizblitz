@@ -3,3 +3,5 @@
 [Claude Haiku 4.5] `src/views/PlayView.vue`
 This view contains my QuestionCard and the game state that was previously in App.vue (questions, currentIndex, score, gameState). When the game ends, use this.$router.push({ name: 'home' }) to return to the home screen.
 Move startGame(), handleAnswer(), and resetGame() methods here and delete them from App.vue. Call this.startGame() in the mounted() lifecycle hook so the game begins automatically when the player navigates to /play.
+
+[Claude Haiku 4.5] Update the style of the nav to be more coherent with the rest of the app.
