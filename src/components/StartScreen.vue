@@ -20,6 +20,8 @@ export default {
   name: "StartScreen",
   methods: {
     playGame() {
+      // TODO Week 7: replace sessionStorage check with store.gameStarted
+      sessionStorage.setItem("gameStarted", "true");
       this.$router.push({ name: "play" });
     },
   },
