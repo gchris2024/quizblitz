@@ -46,22 +46,26 @@ export default {
       type: Number,
       required: true,
     },
+    total: {
+      type: Number,
+      default: 10,
+    },
   },
 
   emits: ["restart"],
 
   computed: {
     ringProgress() {
-      // circumference ≈ 2π×52 ≈ 326.7; map score/10 to that arc
-      return ((this.score / 10) * 2 * Math.PI * 52).toFixed(1);
+      // circumference ≈ 2π×52 ≈ 326.7; map score/total to that arc
+      return ((this.score / this.total) * 2 * Math.PI * 52).toFixed(1);
     },
 
     verdict() {
-      if (this.score === 10) return "Perfect. Absolutely flawless. 🔥";
-      if (this.score >= 8) return "Outstanding — you crushed it!";
-      if (this.score >= 6) return "Solid effort. You know your stuff.";
-      if (this.score >= 4) return "Not bad, but there's room to grow.";
-      if (this.score >= 2) return "Rough round. Shake it off.";
+      if (this.score === this.total) return "Perfect. Absolutely flawless. 🔥";
+      if (this.score >= this.total * 0.8) return "Outstanding — you crushed it!";
+      if (this.score >= this.total * 0.6) return "Solid effort. You know your stuff.";
+      if (this.score >= this.total * 0.4) return "Not bad, but there's room to grow.";
+      if (this.score >= this.total * 0.2) return "Rough round. Shake it off.";
       return "Yikes. The comeback starts now.";
     },
   },

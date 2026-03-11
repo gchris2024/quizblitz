@@ -1,0 +1,1 @@
+PROMPT: Pass a prop into HomeView into StartScreen that lets StartScreen know that the method it should call when the play button is pressed is the `startGame()` method of HomeView.
