@@ -10,22 +10,13 @@
           v-for="(answer, index) in question.answers"
           :key="index"
           class="answer-btn"
-          :class="{
-            correct: answered && index === question.correct,
-            wrong:
-              answered && index === selectedIndex && index !== question.correct,
-          }"
-          :disabled="answered"
-          @click="handleAnswer(index)"
+          :class="buttonClass(index)"
+          :disabled="selectedAnswer !== null"
+          @click="selectAnswer(index)"
         >
-          <span class="answer-letter">{{ letters[index] }}</span>
           <span class="answer-text">{{ answer }}</span>
         </button>
       </div>
-    </div>
-
-    <div class="question-counter">
-      Question {{ currentIndex + 1 }} of {{ totalQuestions }}
     </div>
   </div>
 </template>
@@ -39,42 +30,24 @@ export default {
       type: Object,
       required: true,
     },
-    currentIndex: {
-      type: Number,
-      required: true,
-    },
-    totalQuestions: {
-      type: Number,
-      required: true,
+    selectedAnswer: {
+      type: Number, // index of the button the player clicked
+      default: null, // null - no answer chosen yet
     },
   },
 
   emits: ["answer"],
 
-  data() {
-    return {
-      answered: false,
-      selectedIndex: null,
-      letters: ["A", "B", "C", "D"],
-    };
-  },
-
   methods: {
-    handleAnswer(index) {
-      if (this.answered) return;
-
-      this.answered = true;
-      this.selectedIndex = index;
-
-      const isCorrect = index === this.question.correct;
-
-      setTimeout(() => {
-        this.$emit("answer", isCorrect);
-        // Reset state after emitting so the card is clean if the parent
-        // reuses this component with a new question prop.
-        this.answered = false;
-        this.selectedIndex = null;
-      }, 1000);
+    selectAnswer(index) {
+      if (this.selectedAnswer !== null) return; // already answered, ignore
+      this.$emit("answer", index);
+    },
+    buttonClass(index) {
+      if (this.selectedAnswer === null) return "";
+      if (index === this.question.correct) return "correct";
+      if (index === this.selectedAnswer) return "wrong";
+      return "";
     },
   },
 };
@@ -89,6 +62,7 @@ export default {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  padding: 1.5rem;
   background: #09090f;
   overflow: hidden;
   font-family: "DM Sans", sans-serif;
@@ -132,6 +106,7 @@ export default {
   flex-direction: column;
   gap: 2rem;
   width: min(600px, 90vw);
+  padding-bottom: 2.75rem;
   animation: fadeUp 0.45s ease both;
 }
 @keyframes fadeUp {
@@ -238,6 +213,11 @@ export default {
     color 0.2s ease;
 }
 
+.answer-text {
+  flex: 1;
+  line-height: 1.35;
+}
+
 /* ── correct highlight ── */
 .answer-btn.correct {
   background: rgba(60, 210, 110, 0.15);
@@ -296,9 +276,32 @@ export default {
 .question-counter {
   position: absolute;
   bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 0.95rem;
   color: rgba(255, 220, 50, 0.7);
   font-family: "DM Sans", sans-serif;
   letter-spacing: 0.5px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .question-card {
+    padding: 1rem;
+  }
+
+  .content {
+    gap: 1.25rem;
+    padding-bottom: 3rem;
+  }
+
+  .answers {
+    grid-template-columns: 1fr;
+  }
+
+  .question-text {
+    padding: 1.2rem 1rem;
+  }
 }
 </style>
