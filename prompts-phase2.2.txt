@@ -1,1 +1,3 @@
 PROMPT: Pass a prop into HomeView into StartScreen that lets StartScreen know that the method it should call when the play button is pressed is the `startGame()` method of HomeView.
+
+PROMPT (GPT-5.3-Codex): Fix the styling of #file:PlayView.vue to be more aligned with the rest of app. Do not make any structural changes.
