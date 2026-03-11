@@ -18,11 +18,15 @@
 <script>
 export default {
   name: "StartScreen",
+  props: {
+    onPlay: {
+      type: Function,
+      required: true,
+    },
+  },
   methods: {
     playGame() {
-      // TODO Week 7: replace sessionStorage check with store.gameStarted
-      sessionStorage.setItem("gameStarted", "true");
-      this.$router.push({ name: "play" });
+      this.onPlay();
     },
   },
 };
