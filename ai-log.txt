@@ -13,3 +13,7 @@ Explain the difference between a traditional multi-page website and a Single-Pag
 The game uses v-if to switch between screens.
 Explain the difference between v-if and v-show. Why is v-if the better choice here rather than v-show?
 
+Implement this code into the existing architecture:
+`
+<div v-if="store.gameState === 'end'"> <h2>Game Over</h2> <p>You scored {{ store.score }} of {{ store.questions.length }}</p> <div v-if="!store.scoreSubmitted"> <input v-model="store.playerName" placeholder="Enter your name" /> <button @click="store.submitScore()">Submit Score</button> </div> <p v-else>Score submitted! ✓</p> <button @click="handleRestart">Play Again</button> </div>` 
+Modify any existing code accordingly

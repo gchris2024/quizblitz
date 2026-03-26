@@ -25,8 +25,6 @@
     <!-- Score screen -->
     <ScoreBoard
       v-else-if="store.gameState === 'end'"
-      :score="store.score"
-      :total="store.questions.length"
       @restart="handleRestart"
     />
   </div>

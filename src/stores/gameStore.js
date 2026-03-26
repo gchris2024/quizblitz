@@ -3,6 +3,8 @@ import { questions as questionBank } from "../data/questions.js";
 
 export const useGameStore = defineStore("game", {
   state: () => ({
+    playerName: "",
+    scoreSubmitted: false,
     questions: [],
     currentIndex: 0,
     score: 0,
@@ -52,6 +54,8 @@ export const useGameStore = defineStore("game", {
         "http://localhost:3000/api/questions/random",
       );
       const questions = await response.json();
+      this.scoreSubmitted = false;
+      this.playerName = "";
       this.questions = questions;
       this.currentIndex = 0;
       this.score = 0;
@@ -83,12 +87,29 @@ export const useGameStore = defineStore("game", {
     },
     resetGame() {
       this._stopTimer();
+      this.scoreSubmitted = false;
+      this.playerName = "";
       this.questions = [];
       this.currentIndex = 0;
       this.score = 0;
       this.gameState = "start";
       this.selectedAnswer = null;
       this.timeLeft = 15;
+    },
+    async submitScore() {
+      if (!this.playerName.trim()) return;
+      const response = await fetch("http://localhost:3000/api/scores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playerName: this.playerName,
+          score: this.score,
+          totalQuestions: this.questions.length,
+        }),
+      });
+      if (response.ok) {
+        this.scoreSubmitted = true;
+      }
     },
   },
 });

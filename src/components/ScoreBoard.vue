@@ -21,13 +21,29 @@
         </svg>
         <div class="score-inner">
           <div class="score-num-wrap">
-            <span class="score-num">{{ score }}</span>
-            <span class="score-denom">/10</span>
+            <span class="score-num">{{ store.score }}</span>
+            <span class="score-denom">/{{ store.questions.length }}</span>
           </div>
         </div>
       </div>
 
       <p class="verdict">{{ verdict }}</p>
+
+      <p class="score-line">
+        You scored {{ store.score }} of {{ store.questions.length }}
+      </p>
+
+      <div v-if="!store.scoreSubmitted" class="submit-wrap">
+        <input
+          v-model="store.playerName"
+          class="name-input"
+          placeholder="Enter your name"
+        />
+        <button class="submit-btn" @click="store.submitScore()">
+          Submit Score
+        </button>
+      </div>
+      <p v-else class="submitted-msg">Score submitted! ✓</p>
 
       <button class="restart-btn" @click="$emit('restart')">
         <span>↺</span>
@@ -38,18 +54,14 @@
 </template>
 
 <script>
+import { useGameStore } from "../stores/gameStore.js";
+
 export default {
   name: "ScoreBoard",
 
-  props: {
-    score: {
-      type: Number,
-      required: true,
-    },
-    total: {
-      type: Number,
-      default: 10,
-    },
+  setup() {
+    const store = useGameStore();
+    return { store };
   },
 
   emits: ["restart"],
@@ -57,15 +69,18 @@ export default {
   computed: {
     ringProgress() {
       // circumference ≈ 2π×52 ≈ 326.7; map score/total to that arc
-      return ((this.score / this.total) * 2 * Math.PI * 52).toFixed(1);
+      const total = this.store.questions.length || 1;
+      return ((this.store.score / total) * 2 * Math.PI * 52).toFixed(1);
     },
 
     verdict() {
-      if (this.score === this.total) return "Perfect. Absolutely flawless. 🔥";
-      if (this.score >= this.total * 0.8) return "Outstanding — you crushed it!";
-      if (this.score >= this.total * 0.6) return "Solid effort. You know your stuff.";
-      if (this.score >= this.total * 0.4) return "Not bad, but there's room to grow.";
-      if (this.score >= this.total * 0.2) return "Rough round. Shake it off.";
+      const { score } = this.store;
+      const total = this.store.questions.length;
+      if (score === total) return "Perfect. Absolutely flawless. 🔥";
+      if (score >= total * 0.8) return "Outstanding — you crushed it!";
+      if (score >= total * 0.6) return "Solid effort. You know your stuff.";
+      if (score >= total * 0.4) return "Not bad, but there's room to grow.";
+      if (score >= total * 0.2) return "Rough round. Shake it off.";
       return "Yikes. The comeback starts now.";
     },
   },
@@ -217,6 +232,61 @@ export default {
   max-width: 26ch;
 }
 
+.score-line {
+  margin: -0.3rem 0 0;
+  font-size: 0.92rem;
+  color: rgba(245, 240, 224, 0.68);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.submit-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.name-input {
+  width: 210px;
+  padding: 0.62rem 0.75rem;
+  border: 1px solid rgba(255, 220, 50, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f5f0e0;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: rgba(255, 220, 50, 0.7);
+  box-shadow: 0 0 0 3px rgba(255, 220, 50, 0.12);
+}
+
+.submit-btn {
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(255, 220, 50, 0.55);
+  border-radius: 6px;
+  background: rgba(255, 220, 50, 0.13);
+  color: #ffdc32;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.submit-btn:hover {
+  background: rgba(255, 220, 50, 0.2);
+}
+
+.submitted-msg {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #8dffb8;
+  letter-spacing: 0.04em;
+}
+
 /* ── button ── */
 .restart-btn {
   display: inline-flex;
@@ -268,5 +338,17 @@ export default {
 }
 .restart-btn:hover span:first-child {
   transform: rotate(-180deg);
+}
+
+@media (max-width: 640px) {
+  .submit-wrap {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .name-input {
+    width: 100%;
+  }
 }
 </style>
