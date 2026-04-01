@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import { questions as questionBank } from "../data/questions.js";
 
 export const useGameStore = defineStore("game", {
   state: () => ({
@@ -99,7 +98,8 @@ export const useGameStore = defineStore("game", {
       this.timeLeft = 15;
     },
     async submitScore() {
-      if (!this.playerName.trim()) return;
+      const displayName = (this.userEmail || this.playerName || "").trim();
+      if (!displayName) return;
       const response = await fetch("http://localhost:3000/api/scores", {
         method: "POST",
         headers: {
@@ -107,7 +107,7 @@ export const useGameStore = defineStore("game", {
           Authorization: `Bearer ${this.token}`,
         },
         body: JSON.stringify({
-          playerName: this.playerName,
+          playerName: displayName,
           score: this.score,
           totalQuestions: this.questions.length,
         }),
@@ -116,37 +116,37 @@ export const useGameStore = defineStore("game", {
         this.scoreSubmitted = true;
       }
     },
-  },
-  async register(email, password) {
-    const response = await fetch("http://localhost:3000/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
-    return data;
-  },
+    async register(email, password) {
+      const response = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      return data;
+    },
 
-  async login(email, password) {
-    const response = await fetch("http://localhost:3000/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error);
-    this.token = data.token;
-    this.userEmail = data.email;
-    localStorage.setItem("quizblitz_token", data.token);
-    localStorage.setItem("quizblitz_email", data.email);
-    return data;
-  },
+    async login(email, password) {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      this.token = data.token;
+      this.userEmail = data.email;
+      localStorage.setItem("quizblitz_token", data.token);
+      localStorage.setItem("quizblitz_email", data.email);
+      return data;
+    },
 
-  logout() {
-    this.token = null;
-    this.userEmail = null;
-    localStorage.removeItem("quizblitz_token");
-    localStorage.removeItem("quizblitz_email");
+    logout() {
+      this.token = null;
+      this.userEmail = null;1
+      localStorage.removeItem("quizblitz_token");
+      localStorage.removeItem("quizblitz_email");
+    },
   },
 });

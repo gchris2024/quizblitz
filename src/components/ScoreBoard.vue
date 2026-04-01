@@ -33,17 +33,22 @@
         You scored {{ store.score }} of {{ store.questions.length }}
       </p>
 
-      <div v-if="!store.scoreSubmitted" class="submit-wrap">
-        <input
-          v-model="store.playerName"
-          class="name-input"
-          placeholder="Enter your name"
-        />
-        <button class="submit-btn" @click="store.submitScore()">
+      <div v-if="store.token" class="submit-wrap">
+        <p class="playing-as">Playing as {{ store.userEmail }}</p>
+        <button
+          v-if="!store.scoreSubmitted"
+          class="submit-btn"
+          @click="store.submitScore()"
+        >
           Submit Score
         </button>
+        <p v-else class="submitted-msg">Score submitted ✓</p>
       </div>
-      <p v-else class="submitted-msg">Score submitted! ✓</p>
+
+      <p v-else class="login-prompt">
+        <RouterLink to="/login" class="login-link">Log in</RouterLink>
+        to save your score to the leaderboard.
+      </p>
 
       <button class="restart-btn" @click="$emit('restart')">
         <span>↺</span>
@@ -242,25 +247,16 @@ export default {
 
 .submit-wrap {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.45rem;
 }
 
-.name-input {
-  width: 210px;
-  padding: 0.62rem 0.75rem;
-  border: 1px solid rgba(255, 220, 50, 0.3);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #f5f0e0;
-  font-family: "DM Sans", sans-serif;
-  font-size: 0.9rem;
-}
-
-.name-input:focus {
-  outline: none;
-  border-color: rgba(255, 220, 50, 0.7);
-  box-shadow: 0 0 0 3px rgba(255, 220, 50, 0.12);
+.playing-as {
+  margin: 0;
+  font-size: 0.88rem;
+  color: rgba(245, 240, 224, 0.72);
+  letter-spacing: 0.04em;
 }
 
 .submit-btn {
@@ -285,6 +281,23 @@ export default {
   font-size: 0.92rem;
   color: #8dffb8;
   letter-spacing: 0.04em;
+}
+
+.login-prompt {
+  margin: 0;
+  font-size: 0.92rem;
+  color: rgba(245, 240, 224, 0.72);
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.login-link {
+  color: #ffdc32;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
 }
 
 /* ── button ── */
@@ -343,12 +356,7 @@ export default {
 @media (max-width: 640px) {
   .submit-wrap {
     width: 100%;
-    flex-direction: column;
     align-items: stretch;
-  }
-
-  .name-input {
-    width: 100%;
   }
 }
 </style>
