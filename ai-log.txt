@@ -19,3 +19,7 @@ Implement this code into the existing architecture:
 Modify any existing code accordingly
 
 Style the LeaderboardView component in the same manner as the rest of the application.
+
+Create src/views/LoginView.vue and src/views/RegisterView.vue. Each needs a simple form with email and password fields that call store.login() or store.register() and redirect to / on success.
+Add links to both in your navigation bar.
+Style the new views in the same fashion as the rest of the application.
