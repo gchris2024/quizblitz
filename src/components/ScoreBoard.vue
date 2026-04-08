@@ -46,7 +46,7 @@
       </div>
 
       <p v-else class="login-prompt">
-        <RouterLink to="/login" class="login-link">Log in</RouterLink>
+        <RouterLink to="/auth" class="login-link">Sign in</RouterLink>
         to save your score to the leaderboard.
       </p>
 
@@ -100,7 +100,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100dvh - var(--app-header-height, 88px));
+  padding: 1rem;
   background: #09090f;
   overflow: hidden;
   font-family: "DM Sans", sans-serif;
@@ -141,10 +142,12 @@ export default {
 .content {
   position: relative;
   z-index: 1;
+  width: min(460px, 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.75rem;
+  gap: 1.5rem;
+  text-align: center;
   animation: fadeUp 0.55s ease both;
 }
 @keyframes fadeUp {
@@ -357,6 +360,12 @@ export default {
   .submit-wrap {
     width: 100%;
     align-items: stretch;
+  }
+
+  .submit-btn,
+  .restart-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 </style>

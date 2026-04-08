@@ -40,7 +40,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100dvh - var(--app-header-height, 88px));
+  padding: 1rem;
   background: #09090f;
   overflow: hidden;
   font-family: "DM Sans", sans-serif;
@@ -82,6 +83,7 @@ export default {
 .content {
   position: relative;
   z-index: 1;
+  width: min(100%, 34rem);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -214,5 +216,21 @@ export default {
 
 .play-btn:hover .btn-flash {
   transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+  .content {
+    gap: 1.1rem;
+  }
+
+  .tagline {
+    max-width: 22ch;
+  }
+
+  .play-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1rem;
+  }
 }
 </style>

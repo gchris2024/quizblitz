@@ -46,3 +46,5 @@ I need you to implement the following code block into the existing architecture.
 
   <button @click="handleRestart">Play Again</button>
 </div>`
+
+Make the UI more mobile friendy, AND consolidate the login / register pages

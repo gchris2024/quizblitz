@@ -5,3 +5,52 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  color-scheme: dark;
+  --app-header-height: 88px;
+  --app-bg: #09090f;
+  --app-text: #f5f0e0;
+}
+
+html {
+  background: var(--app-bg);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --app-header-height: 132px;
+  }
+}

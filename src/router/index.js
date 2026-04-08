@@ -4,14 +4,19 @@ import HomeView from "../views/HomeView.vue";
 import PlayView from "../views/PlayView.vue";
 import LeaderboardView from "../views/LeaderboardView.vue";
 import LoginView from "../views/LoginView.vue";
-import RegisterView from "../views/RegisterView.vue";
 
 const routes = [
   { path: "/", name: "home", component: HomeView },
   { path: "/play", name: "play", component: PlayView },
   { path: "/leaderboard", name: "leaderboard", component: LeaderboardView },
-  { path: "/login", name: "login", component: LoginView },
-  { path: "/register", name: "register", component: RegisterView },
+  { path: "/auth", alias: "/login", name: "login", component: LoginView },
+  {
+    path: "/register",
+    redirect: {
+      name: "login",
+      query: { mode: "register" },
+    },
+  },
 ];
 
 const router = createRouter({

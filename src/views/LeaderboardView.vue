@@ -69,7 +69,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: calc(100dvh - var(--app-header-height, 88px));
+  padding: 1rem;
   background: #09090f;
   overflow: hidden;
   font-family: "DM Sans", sans-serif;

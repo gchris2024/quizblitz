@@ -61,8 +61,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 1.5rem;
+  min-height: calc(100dvh - var(--app-header-height, 88px));
+  padding: 1rem;
   background: #09090f;
   overflow: hidden;
   font-family: "DM Sans", sans-serif;
@@ -104,9 +104,10 @@ export default {
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  width: min(600px, 90vw);
-  padding-bottom: 2.75rem;
+  gap: 1.5rem;
+  width: min(680px, 100%);
+  padding-top: 2.8rem;
+  padding-bottom: 1.5rem;
   animation: fadeUp 0.45s ease both;
 }
 @keyframes fadeUp {
@@ -145,13 +146,14 @@ export default {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-height: 60px;
   padding: 0.9rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   color: #f5f0e0;
   font-family: "DM Sans", sans-serif;
-  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  font-size: clamp(0.9rem, 1.8vw, 1rem);
   font-weight: 500;
   text-align: left;
   cursor: pointer;
@@ -287,13 +289,10 @@ export default {
 }
 
 @media (max-width: 640px) {
-  .question-card {
-    padding: 1rem;
-  }
-
   .content {
-    gap: 1.25rem;
-    padding-bottom: 3rem;
+    gap: 1.1rem;
+    padding-top: 2.5rem;
+    padding-bottom: 1rem;
   }
 
   .answers {
@@ -302,6 +301,10 @@ export default {
 
   .question-text {
     padding: 1.2rem 1rem;
+  }
+
+  .answer-btn {
+    min-height: 56px;
   }
 }
 </style>

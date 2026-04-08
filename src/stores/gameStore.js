@@ -154,7 +154,6 @@ export const useGameStore = defineStore("game", {
     logout() {
       this.token = null;
       this.userEmail = null;
-      1;
       localStorage.removeItem("quizblitz_token");
       localStorage.removeItem("quizblitz_email");
     },

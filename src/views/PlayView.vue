@@ -64,7 +64,7 @@ export default {
 
 .play-view {
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100dvh - var(--app-header-height, 88px));
   font-family: "DM Sans", sans-serif;
 }
 
