@@ -52,7 +52,7 @@ export const useGameStore = defineStore("game", {
     },
     async startGame() {
       const response = await fetch(
-        "http://localhost:3000/api/questions/random",
+        `${import.meta.env.VITE_API_URL}/api/questions/random`,
       );
       const questions = await response.json();
       this.scoreSubmitted = false;
@@ -100,39 +100,48 @@ export const useGameStore = defineStore("game", {
     async submitScore() {
       const displayName = (this.userEmail || this.playerName || "").trim();
       if (!displayName) return;
-      const response = await fetch("http://localhost:3000/api/scores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${this.token}`,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/scores`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.token}`,
+          },
+          body: JSON.stringify({
+            playerName: displayName,
+            score: this.score,
+            totalQuestions: this.questions.length,
+          }),
         },
-        body: JSON.stringify({
-          playerName: displayName,
-          score: this.score,
-          totalQuestions: this.questions.length,
-        }),
-      });
+      );
       if (response.ok) {
         this.scoreSubmitted = true;
       }
     },
     async register(email, password) {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        },
+      );
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
       return data;
     },
 
     async login(email, password) {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        },
+      );
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
       this.token = data.token;
@@ -144,7 +153,8 @@ export const useGameStore = defineStore("game", {
 
     logout() {
       this.token = null;
-      this.userEmail = null;1
+      this.userEmail = null;
+      1;
       localStorage.removeItem("quizblitz_token");
       localStorage.removeItem("quizblitz_email");
     },

@@ -15,10 +15,16 @@
       </p>
 
       <ol v-else-if="scores.length > 0" class="score-list">
-        <li v-for="(entry, index) in scores" :key="entry._id || index" class="score-item">
+        <li
+          v-for="(entry, index) in scores"
+          :key="entry._id || index"
+          class="score-item"
+        >
           <span class="rank">#{{ index + 1 }}</span>
           <span class="name">{{ entry.playerName }}</span>
-          <span class="score">{{ entry.score }} / {{ entry.totalQuestions }}</span>
+          <span class="score"
+            >{{ entry.score }} / {{ entry.totalQuestions }}</span
+          >
         </li>
       </ol>
 
@@ -41,7 +47,9 @@ export default {
   },
   async mounted() {
     try {
-      const response = await fetch("http://localhost:3000/api/scores");
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/scores`,
+      );
       if (!response.ok) throw new Error("Server error");
       this.scores = await response.json();
     } catch (err) {
